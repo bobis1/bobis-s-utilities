@@ -2,4 +2,235 @@
 </head>
 <body>
 <p>Hello there!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        .calculator {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .display {
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 10px;
+            font-size: 18px;
+            text-align: right;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .button {
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">0</div>
+        <div class="buttons">
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9</button>
+            <button class="button">/</button>
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button">6</button>
+            <button class="button">*</button>
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button">-</button>
+            <button class="button">0</button>
+            <button class="button">.</button>
+            <button class="button">=</button>
+            <button class="button">+</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.querySelector('.display');
+        const buttons = document.querySelectorAll('.button');
+
+        let currentNumber = '';
+        let previousNumber = '';
+        let operation = null;
+
+        function updateDisplay() {
+            display.textContent = currentNumber;
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.textContent;
+
+                if (/\d/.test(value)) {
+                    currentNumber += value;
+                    updateDisplay();
+                } else if (value === '.') {
+                    if (!currentNumber.includes('.')) {
+                        currentNumber += value;
+                        updateDisplay();
+                    }
+                } else if (value === '+' || value === '-' || value === '*' || value === '/') {
+                    previousNumber = currentNumber;
+                    currentNumber = '';
+                    operation = value;
+                } else if (value === '=') {
+                    let result;
+                    switch (operation) {
+                        case '+':
+                            result = parseFloat(previousNumber) + parseFloat(currentNumber);
+                            break;
+                        case '-':
+                            result = parseFloat(previousNumber) - parseFloat(currentNumber);
+                            break;
+                        case '*':
+                            result = parseFloat(previousNumber) * parseFloat(currentNumber);
+                            break;
+                        case '/':
+                            result = parseFloat(previousNumber) / parseFloat(currentNumber);
+                            break;
+                    }
+                    currentNumber = result.toString();
+                    previousNumber = '';
+                    operation = null;
+                    updateDisplay();
+                }
+            });
+        });
+    </script>
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quote-container">
+        <div class="quote" id="quote"></div>
+        <div class="author" id="author"></div>
+        <button onclick="getQuote()">Get New Quote</button>
+    </div>
+    <script src="script.js"></script>
+<script>
+  const quotes = [
+    {
+        quote: "The only way to do great work is to love what you do.",
+        author: "Steve Jobs"
+    },
+    {
+        quote: "If you can dream it, you can do it.",
+        author: "Walt Disney"
+    },
+    {
+        quote: "Don't let someone say you can't do it just because they can't do it.",
+        author: "Unknown"
+    },
+{
+quote: "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+        author: "Nelson Mandela"
+ },
+
+
+
+];
+
+function getQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const quote = quotes[randomIndex];
+
+    document.getElementById("quote").textContent = '"' + quote.quote + '"';
+    document.getElementById("author").textContent = "- " + quote.author;
+}
+
+getQuote(); // Get a quote on page load
+
+</script>
+
+</body>
+</html>
+
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>My To-Do List</h1>
+    <input type="text" id="new-task" placeholder="Enter a new task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="task-list">
+        </ul>
+<script>
+  const taskList = document.getElementById("task-list");
+
+function addTask() {
+    const taskText = document.getElementById("new-task").value;
+    if (taskText.trim() === "") {
+        alert("Please enter a valid task.");
+        return;
+    }
+
+    const taskElement = document.createElement("li");
+    taskElement.classList.add("task");
+
+    const taskTextElement = document.createElement("span");
+    taskTextElement.textContent = taskText;
+
+    const completeButton = document.createElement("button");
+    completeButton.textContent = "Complete";
+    completeButton.addEventListener("click", function () {
+        taskElement.classList.add("task-completed");
+        this.disabled = true;
+    });
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", function () {
+        taskList.removeChild(taskElement);
+    });
+
+    taskElement.appendChild(taskTextElement);
+    taskElement.appendChild(completeButton);
+    taskElement.appendChild(deleteButton);
+
+    taskList.appendChild(taskElement);
+    document.getElementById("new-task").value = "";
+}
+
+</script>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
 </body>
